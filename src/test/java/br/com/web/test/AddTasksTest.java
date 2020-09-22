@@ -1,21 +1,36 @@
 package br.com.web.test;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 public class AddTasksTest {
 	
 	private WebDriver driver;
 	
 	public WebDriver acessarAplicacao() {
-		  System.setProperty("webdriver.chrome.driver","/Users/rjsilva/Downloads/chromedriver");
-		  driver = new ChromeDriver();
-		  driver.navigate().to("http://localhost:8001/tasks/add");
+	
+		 try {
+		  //System.setProperty("webdriver.chrome.driver","/Users/rjsilva/Downloads/chromedriver");
+		  DesiredCapabilities capabilities = DesiredCapabilities.chrome();
+		  driver = new RemoteWebDriver(new URL("http://127.0.0.1:4444/wd/hub"), capabilities);
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		}
+		  driver.navigate().to("http://127.0.0.1:8001/tasks/add");
 		  return driver;
+		/*
+		driver = new ChromeDriver();
+		driver.navigate().to("http://localhost:8001/tasks/add");
+		return driver;
+		*/
 	}
 	
 	@Test
